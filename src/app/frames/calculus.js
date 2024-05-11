@@ -19,16 +19,14 @@ function sanitize_prompt(prompt) {
     prompt = prompt.replace(' h', 'h')
 
     // remove double spaces
-    prompt = prompt.replace('  ', ' ')
+    prompt = prompt.replace(/ {2}/g, ' ')
 
     // without any spaces it's a pace, add a dummy distance
     if (!/\s/g.test(prompt)) {
-        // if (/km/.test(prompt))
-        //     prompt = `1000 @ ${prompt}`
-        // else if (/mi/.test(prompt))
-        //     prompt = `1609 @ ${prompt}`
-
-        prompt = `1000 @ ${prompt}`
+        if (/km/.test(prompt))
+            prompt = `1000 @ ${prompt}`
+        else if (/mi/.test(prompt))
+            prompt = `1609 @ ${prompt}`
     }
 
     return prompt
@@ -59,8 +57,11 @@ function parse_prompt(prompt) {
             pace = pace_to_seconds(parts[2])
         }
 
+        if (prompt.includes('in') && prompt.includes('@'))
+            throw new Error("Cannot specify both pace and time")
+
         if (pace === null && time === null)
-            throw "Missing infos"
+            throw new Error("Missing pace or time")
 
         return {
             distance: distance,
@@ -68,7 +69,7 @@ function parse_prompt(prompt) {
             time: time
         }
     } catch (e) {
-        throw "Invalid input"
+        throw new Error("Invalid input: " + e.message)
     }
 }
 
@@ -81,13 +82,13 @@ function distance_to_meters(distance) {
     // meters
     let m;
     if (m = distance.match('([0-9]+)'))
-        meters = parseInt(m[0])
+        meters = parseInt(m[1])
     // kilometers
     if (m = distance.match('([0-9]*)k[m]?'))
-        meters = parseInt(m[0]) * 1000
+        meters = parseInt(m[1]) * 1000
     // miles
     if (m = distance.match('(([0-9]*[.])?[0-9]+)mi'))
-        meters = Math.floor(parseFloat(m[0]) * 1609.3)
+        meters = Math.round(parseFloat(m[1]) * 1609.3)
 
     if (['half', 'halfmarathon', 'hm'].includes(distance))
         meters = 21097
@@ -107,17 +108,17 @@ function time_to_seconds(time) {
 
     // minutes
     if (m = time.match('([0-9]*)min[s]?'))
-        seconds = parseInt(m[0]) * 60
+        seconds = parseInt(m[1]) * 60
     // hours
     if (m = time.match('([0-9]*)hour[s]?'))
-        seconds = parseInt(m[0]) * 3600
+        seconds = parseInt(m[1]) * 3600
 
     // minutes and seconds
     if (m = time.match('([0-9]*):([0-9]*)'))
-        seconds = parseInt(m[0]) * 60 + parseInt(m[1])
+        seconds = parseInt(m[1]) * 60 + parseInt(m[2])
     // hours, minutes and seconds
     if (m = time.match('([0-9]*):([0-9]*):([0-9]*)'))
-        seconds = parseInt(m[0]) * 3600 + parseInt(m[1]) * 60 + parseInt(m[2])
+        seconds = parseInt(m[1]) * 3600 + parseInt(m[2]) * 60 + parseInt(m[3])
 
     return seconds
 }
@@ -131,10 +132,10 @@ function pace_to_seconds(time) {
 
     // minutes and seconds
     if (m = time.match('([0-9]*):([0-9]*)/km'))
-        seconds = parseInt(m[0]) * 60 + parseInt(m[1])
+        seconds = parseInt(m[1]) * 60 + parseInt(m[2])
     // hours, minutes and seconds
     if (m = time.match('([0-9]*):([0-9]*)/mi'))
-        seconds = Math.floor((parseInt(m[0]) * 60 + parseInt(m[1])) / 1.6093)
+        seconds = Math.round((parseInt(m[1]) * 60 + parseInt(m[2])) / 1.6093)
 
     return seconds
 }
@@ -146,7 +147,8 @@ function pace_to_km(pace) {
     let mins = Math.floor(pace / 60)
     let seconds = pace % 60
 
-    // TODO: 02d for seconds
+    // %02d is too complex for javascript ¯\_(ツ)_/¯
+    seconds = seconds < 10 ? '0' + seconds : seconds
     return `${mins}:${seconds}/km`
 }
 
@@ -158,7 +160,8 @@ function pace_to_mi(pace) {
     let mins = Math.floor(pace_mi / 60)
     let seconds = Math.floor(pace_mi % 60)
 
-    // TODO: 02d for seconds
+    // %02d is too complex for javascript ¯\_(ツ)_/¯
+    seconds = seconds < 10 ? '0' + seconds : seconds
     return `${mins}:${seconds}/mi`
 }
 
@@ -170,12 +173,16 @@ function time_to_string(time) {
     let mins = Math.floor(time % 3600 / 60)
     let seconds = time % 60
 
-    if (hours > 0)
-        // TODO: 02d for min and seconds
+    if (hours > 0) {
+        // %02d is too complex for javascript ¯\_(ツ)_/¯
+        mins = mins < 10 ? '0' + mins : mins
+        seconds = seconds < 10 ? '0' + seconds : seconds
         return `${hours}:${mins}:${seconds}`
-    else
-        // TODO: 02d for seconds
+    } else {
+        // %02d is too complex for javascript ¯\_(ツ)_/¯
+        seconds = seconds < 10 ? '0' + seconds : seconds
         return `${mins}:${seconds}`
+    }
 }
 
 function meters_to_km(meters) {
@@ -202,14 +209,14 @@ function calculate(prompt) {
 
     // no prompt, no output
     if (!prompt)
-        return ['', '']
+        return {metric: '', imperial: ''}
 
-    console.log(prompt)
+    // console.log(prompt)
 
     // extract the relevant infos
     let {distance, pace, time} = parse_prompt(prompt)
 
-    console.log(`${distance} ${pace} ${time}`)
+    // console.log(`${distance} ${pace} ${time}`)
 
     // we only have pace, calculate time
     if (time === null)
@@ -219,21 +226,19 @@ function calculate(prompt) {
     if (pace === null)
         pace = Math.floor(time / distance * 1000)
 
-    console.log(`${distance} ${pace} ${time}`)
+    // console.log(`${distance} ${pace} ${time}`)
 
     let metric = `${meters_to_km(distance)} @ ${pace_to_km(pace)} in ${time_to_string(time)}`
     let imperial = `${meters_to_mi(distance)} @ ${pace_to_mi(pace)} in ${time_to_string(time)}`
 
-    console.log(metric)
-    console.log(imperial)
+    // console.log(metric)
+    // console.log(imperial)
 
-    return {
-        metric: metric,
-        imperial: imperial,
-    }
+    return {metric: metric, imperial: imperial}
 }
 
 export {
+    sanitize_prompt,
     parse_prompt,
     calculate,
 }

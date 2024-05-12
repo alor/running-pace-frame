@@ -5,8 +5,7 @@
  - use tailwind css to make it pretty
 
 ### Frame
- - port the python code to js (in progress...)
-   - write test for correct time values
+ - write examples frame
  - make it pretty
 
 ### Deploy to Vercel

@@ -3,7 +3,7 @@ import HomePage from "@/app/home";
 
 export async function generateMetadata() {
   return {
-    title: "Running Pace",
+    title: "Miles O'Meter",
     // provide a full URL to your /frames endpoint
     other: await fetchMetadata(
         new URL(

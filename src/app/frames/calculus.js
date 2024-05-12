@@ -43,6 +43,10 @@ function parse_prompt(prompt) {
     let distance;
 
     try {
+        // no prompt, no output
+        if (!prompt || prompt.length === 0)
+            throw new Error("Empty prompt")
+
         // pre parsing to normalize the prompt
         prompt = sanitize_prompt(prompt)
 
@@ -206,10 +210,6 @@ function calculate(prompt) {
     // """
     // do the calculation
     // """
-
-    // no prompt, no output
-    if (!prompt)
-        return {metric: '', imperial: ''}
 
     // console.log(prompt)
 

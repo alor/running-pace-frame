@@ -20,7 +20,7 @@ const handleRequest = frames(async (ctx) => {
         image: (
             <Frame ctx={ctx}/>
         ),
-        textInput: "Conversion prompt...",
+        textInput: "How fast do you have to run?",
         buttons: [
             <Button action="post" target={{query: {value: "Calculate"}}}>
                 🏃‍♂️‍➡️ Calculate

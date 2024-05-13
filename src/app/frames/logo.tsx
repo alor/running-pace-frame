@@ -1,6 +1,6 @@
-export default function FrameLogo() {
+export default function FrameLogo({fill='#FFF'}) {
     return <>
-        <svg fill="#FFF" version="1.1" width="200px" height="200px" viewBox="0 0 487.811 487.81">
+        <svg fill={fill} version="1.1" width="200px" height="200px" viewBox="0 0 487.811 487.81">
             <g>
                 <g id="_x33_6_24_">
                     <g>

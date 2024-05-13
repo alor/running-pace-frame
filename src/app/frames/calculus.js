@@ -21,14 +21,19 @@ function sanitize_prompt(prompt) {
     // remove double spaces
     prompt = prompt.replace(/ {2}/g, ' ')
 
-    // without any spaces it's a pace, add a dummy distance
+    // without any spaces it's a pace, add a dummy distance and convert to time
     if (!/\s/g.test(prompt)) {
         if (/km/.test(prompt))
-            prompt = `1000 @ ${prompt}`
+            prompt = `1000 in ${prompt.split('/')[0]}`
         else if (/mi/.test(prompt))
-            prompt = `1609 @ ${prompt}`
+            prompt = `1609 in ${prompt.split('/')[0]}`
     }
-
+    // if (!/\s/g.test(prompt)) {
+    //     if (/km/.test(prompt))
+    //         prompt = `1000 @ ${prompt}`
+    //     else if (/mi/.test(prompt))
+    //         prompt = `1609 @ ${prompt}`
+    // }
     return prompt
 }
 
@@ -97,7 +102,7 @@ function distance_to_meters(distance) {
     if (['half', 'halfmarathon', 'hm'].includes(distance))
         meters = 21097
 
-    if (['full', 'fullmarathon', 'fm', 'marathon'].includes(distance))
+    if (['full', 'fullmarathon', 'fm', 'marathon', 'm'].includes(distance))
         meters = 42195
 
     return meters
@@ -194,8 +199,7 @@ function meters_to_km(meters) {
     // Convert meters to Km string (e.g 10000 -> 10k)
     // """
     let d = meters / 1000
-    // TODO find the 'g' equivalent
-    return `${d}Km`
+    return `${d} Km`
 }
 
 function meters_to_mi(meters) {
@@ -203,7 +207,7 @@ function meters_to_mi(meters) {
     // Convert meters to Miles string (e.g 10000 -> 6.2mi)
     // """
     let d = _.round(meters / 1609.3, 2)
-    return `${d}mi`
+    return `${d} ${d === 1 ? 'mile' : 'miles'}`
 }
 
 function calculate(prompt) {
@@ -220,11 +224,11 @@ function calculate(prompt) {
 
     // we only have pace, calculate time
     if (time === null)
-        time = Math.floor(distance / 1000 * pace)
+        time = Math.round(distance / 1000 * pace)
 
     // we only have time, calculate pace
     if (pace === null)
-        pace = Math.floor(time / distance * 1000)
+        pace = Math.round(time / distance * 1000)
 
     // console.log(`${distance} ${pace} ${time}`)
 

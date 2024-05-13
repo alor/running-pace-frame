@@ -23,10 +23,10 @@ const handleRequest = frames(async (ctx) => {
         textInput: "Conversion prompt...",
         buttons: [
             <Button action="post" target={{query: {value: "Calculate"}}}>
-                Calculate
+                🏃‍♂️‍➡️ Calculate
             </Button>,
             <Button action="post" target={{query: {value: "Examples"}}}>
-                Examples
+                📖 Examples
             </Button>
         ],
     };

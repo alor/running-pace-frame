@@ -1,9 +1,11 @@
+import FrameTemplate from "@/app/frames/template";
+import FrameLogo from "@/app/frames/logo";
+
 export default function FrameHome() {
     return (
-        <div tw="flex flex-col">
-            <div tw="text-[52px]">Miles O&apos;Meter Calculator</div>
-            <hr/>
-            <div tw="flex">Convert Kilometers to Miles, paces, time, race time calculator</div>
-        </div>
+        <FrameTemplate>
+            <FrameLogo/>
+            <h1 tw="text-[60px] text-white font-bold text-left">Miles O&apos;Meter</h1>
+        </FrameTemplate>
     )
 }

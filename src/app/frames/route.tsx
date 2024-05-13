@@ -22,10 +22,10 @@ const handleRequest = frames(async (ctx) => {
         ),
         textInput: "How fast do you have to run?",
         buttons: [
-            <Button action="post" target={{query: {value: "Calculate"}}}>
+            <Button action="post" target={{query: {value: "Calculate"}, pathname: "/"}}>
                 🏃‍♂️‍➡️ Calculate
             </Button>,
-            <Button action="post" target={{query: {value: "Examples"}}}>
+            <Button action="post" target={{query: {value: "Examples"}, pathname: "/"}}>
                 📖 Examples
             </Button>
         ],

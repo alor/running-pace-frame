@@ -10,10 +10,10 @@ export default function FrameExamples() {
                         4:22/km
                     </div>
                     <div tw="mt-8 flex">
-                        6:05/mi
+                        800 @ 6:05/mi
                     </div>
                     <div tw="mt-8 flex">
-                        8:23 /mi
+                        8:23/mi
                     </div>
                 </div>
                 <div tw="flex flex-col md:flex-row w-full px-4 md:items-center justify-between text-indigo-600">

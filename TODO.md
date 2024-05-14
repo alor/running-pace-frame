@@ -1,6 +1,6 @@
 # TODO
 
  
-### Deploy to Vercel
- - learn how it works
- - do it
+### Training plans
+ - is it worth to implement?
+ 

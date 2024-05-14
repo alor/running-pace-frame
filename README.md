@@ -14,7 +14,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the www homepage.
 
-then run the frames.js debugger:
+then run the [frames.js](https://github.com/framesjs/frames.js) debugger:
 
 ```bash
 npx frames

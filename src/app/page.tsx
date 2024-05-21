@@ -1,5 +1,6 @@
 import { fetchMetadata } from "frames.js/next";
 import HomePage from "@/app/home";
+import {appURL} from "@/app/utils";
 
 export async function generateMetadata() {
   return {
@@ -8,9 +9,7 @@ export async function generateMetadata() {
     other: await fetchMetadata(
         new URL(
             "/frames",
-            process.env.VERCEL_URL
-                ? `https://${process.env.VERCEL_URL}`
-                : "http://localhost:3000"
+            appURL()
         )
     ),
   };

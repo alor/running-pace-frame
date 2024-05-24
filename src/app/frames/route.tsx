@@ -3,7 +3,7 @@ import {Button} from "frames.js/next";
 import {frames} from "./frames";
 import {error} from "frames.js/core";
 import Frame from "./frame"
-import {parse_prompt} from "@/app/frames/calculus";
+import {parse_prompt} from "@/app/core/calculus";
 
 const handleRequest = frames(async (ctx) => {
 

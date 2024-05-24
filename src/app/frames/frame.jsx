@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {calculate} from "@/app/frames/calculus";
+import {calculate} from "@/app/core/calculus";
 import FrameHome from "@/app/frames/home";
 import FrameResults from "@/app/frames/results";
 import FrameExamples from "@/app/frames/examples";

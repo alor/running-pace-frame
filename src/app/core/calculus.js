@@ -242,6 +242,7 @@ function calculate(prompt) {
 }
 
 export {
+    time_to_string,
     sanitize_prompt,
     parse_prompt,
     calculate,

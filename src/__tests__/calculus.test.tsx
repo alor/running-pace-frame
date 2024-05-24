@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import {calculate, parse_prompt, sanitize_prompt} from "@/app/frames/calculus";
+import {calculate, parse_prompt, sanitize_prompt} from "@/app/core/calculus";
 
 const prompts_to_test = [
     "5:00/km", "5:00 / km", "4:00 /Km",

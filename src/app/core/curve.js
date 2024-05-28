@@ -34,8 +34,27 @@ function running_curve_str(T1, D1) {
     // """
     // Print the curve in human-readable format
     // """
+    function distance_to_human(d) {
+        switch (d) {
+            case 1000:
+                return '1000m'
+            case 1609:
+                return '1 mile'
+            case 5000:
+                return '5K'
+            case 10000:
+                return '10K'
+            case 21097:
+                return 'Half'
+            case 42195:
+                return 'Full'
+            default:
+                return `${d}`
+        }
+    }
+
     return running_curve(T1, D1).map(p => {
-        return `${p.distance} in ${time_to_string(p.time)}`
+        return `${distance_to_human(p.distance)} in ${time_to_string(p.time)}`
     })
 }
 

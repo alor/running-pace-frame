@@ -7,8 +7,8 @@ import FrameExamples from "@/app/frames/examples";
 
 const Frame = ({ctx}) => {
 
-    // not called yet
-    if (!ctx.pressedButton)
+    // not called yet or coming from another frame invoking 'Home'
+    if (!ctx.pressedButton || ctx.searchParams.value === 'Home')
         return <FrameHome/>
 
     // show the examples

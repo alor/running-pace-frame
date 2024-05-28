@@ -9,7 +9,7 @@ const handleRequest = frames(async (ctx) => {
 
     // check that the input prompt is valid
     try {
-        ctx.searchParams?.value === 'Calculate' && parse_prompt(ctx.message?.inputText)
+        ctx.searchParams?.value === 'Convert' && parse_prompt(ctx.message?.inputText)
     } catch (e) {
         console.log(e)
         // @ts-ignore
@@ -20,14 +20,20 @@ const handleRequest = frames(async (ctx) => {
         image: (
             <Frame ctx={ctx}/>
         ),
-        textInput: "How fast do you have to run?",
+        textInput: "How fast do you want to run?",
         buttons: [
-            <Button action="post" target={{query: {value: "Calculate"}, pathname: "/"}}>
-                🏃‍♂️‍➡️ Calculate
+            <Button action="post" target={{query: {value: "Convert"}, pathname: "/"}}>
+                🏃‍♂️‍➡️ Convert
+            </Button>,
+            <Button action="post" target={{query: {value: "Predict"}, pathname: "/curve"}}>
+                📈 Predict
+            </Button>,
+            <Button action="post" target={{query: {value: "Plan"}, pathname: "/plans"}}>
+                👟 Plan
             </Button>,
             <Button action="post" target={{query: {value: "Examples"}, pathname: "/"}}>
                 📖 Examples
-            </Button>
+            </Button>,
         ],
     };
 });

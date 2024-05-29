@@ -2,7 +2,7 @@ import React from "react";
 import FrameTemplate from "@/app/frames/template";
 import FrameLogo from "@/app/frames/logo";
 
-export default function FrameResults({curve, prompt}: {curve:array, prompt:string}) {
+export default function FrameResults({curve, prompt}: {curve:Array<string>, prompt:string}) {
 
     return (
         <FrameTemplate>

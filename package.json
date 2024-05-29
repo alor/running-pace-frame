@@ -10,8 +10,8 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@frames.js/debugger": "^0.2.7",
-    "frames.js": "^0.15.2",
+    "@frames.js/debugger": "^0.2.12",
+    "frames.js": "^0.16.4",
     "lodash": "^4.17.21",
     "next": "14.2.3",
     "react": "^18",

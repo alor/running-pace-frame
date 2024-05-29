@@ -1,5 +1,6 @@
 import React from "react";
 import FrameTemplate from "@/app/frames/template";
+import FrameLogo from "@/app/frames/logo";
 
 export default function FrameResults({prompt, metric, imperial}: {prompt:string, metric:string, imperial:string}) {
     // parse the string and split into values
@@ -13,7 +14,10 @@ export default function FrameResults({prompt, metric, imperial}: {prompt:string,
 
     return (
         <FrameTemplate>
-            <div tw="text-[48px] text-white">{prompt}</div>
+            <div tw="flex justify-between items-center">
+                <FrameLogo/>
+                <h1 tw="text-[48px] text-white">{prompt}</h1>
+            </div>
             <div tw="bg-gray-100 flex flex-wrap rounded">
                 <div tw="flex flex-col md:flex-row w-full px-4 md:items-center justify-between text-indigo-600">
                     <div tw="mt-8 flex">

@@ -28,9 +28,9 @@ const handleRequest = frames(async (ctx) => {
             <Button action="post" target={{query: {value: "Predict"}, pathname: "/curve"}}>
                 📈 Predict
             </Button>,
-            <Button action="post" target={{query: {value: "Plan"}, pathname: "/plans"}}>
-                👟 Plan
-            </Button>,
+            // <Button action="post" target={{query: {value: "Plan"}, pathname: "/plans"}}>
+            //     👟 Plan
+            // </Button>,
             <Button action="post" target={{query: {value: "Examples"}, pathname: "/"}}>
                 📖 Examples
             </Button>,
